@@ -21,16 +21,17 @@ function (set_compiler_flags)
     # Clang-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror -lstdc++"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -lstdc++"
       )
     set (RELEASE_FLAGS
-      "-O3 -DNDEBUG -march=native -fvectorize -flto"
+      "-O3 -DNDEBUG -march=native -fvectorize -flto -lstdc++"
       )
     set (MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto"
+      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto -lstdc++"
       )
     set (RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -march=native -fvectorize"
+      "-O2 -g -DNDEBUG -march=native -fvectorize -lstdc++"
       )
     set (MINSIZEREL_LINKER_FLAGS
       "-Wl,--gc-sections -Wl,--strip-all"
@@ -42,7 +43,8 @@ function (set_compiler_flags)
     # GNU-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic"
       )
     set (RELEASE_FLAGS
       "-O3 -DNDEBUG -march=native -ftree-vectorize -flto"
@@ -63,7 +65,8 @@ function (set_compiler_flags)
     # MSVC-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "/Zi /Od /Ob0 /MDd /W4 /WX /permissive- /RTC1"
+      # "/Zi /Od /Ob0 /MDd /W4 /WX /permissive- /RTC1"
+      "/Zi /Od /Ob0 /MDd /W4 /permissive- /RTC1"
       )
     set (RELEASE_FLAGS
       "/O2 /MD /DNDEBUG /GL /fp:fast"
@@ -86,16 +89,17 @@ function (set_compiler_flags)
     # Intel-specific flags
     # -------------------------------------------------------------------------
     set(DEBUG_FLAGS
-      "-g3 -O0 -Wall -Wextra -Werror -traceback"
+      # "-g3 -O0 -Wall -Wextra -Werror -traceback -lstdc++"
+      "-g3 -O0 -Wall -Wextra -traceback -lstdc++"
       )
     set(RELEASE_FLAGS
-      "-O3 -DNDEBUG -xHost -ipo"
+      "-O3 -DNDEBUG -xHost -ipo -lstdc++"
       )
     set(MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ipo"
+      "-Os -DNDEBUG -ipo -lstdc++"
       )
     set(RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -xHost -ipo")
+      "-O2 -g -DNDEBUG -xHost -ipo -lstdc++")
     set(MINSIZEREL_LINKER_FLAGS
       "-Wl,--gc-sections -Wl,--strip-all"
       )
