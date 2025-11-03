@@ -2,6 +2,18 @@
 # A CMake build script for the `C++ Playground' project
 # =============================================================================
 
+# ============================================================================
+#
+# 2025-11-03 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Added output messages for compiler options based on build type.
+#
+# 2017 André Müller <foss@andremueller-online.de>
+#
+# * Created.
+#
+# ============================================================================
+
 # -----------------------------------------------------------------------------
 # Define the minimum required version of CMake
 # -----------------------------------------------------------------------------
@@ -57,6 +69,9 @@ message(STATUS
   " ..."
   )
 
+# Set the C++ standard to C++11
+set (CMAKE_CXX_STANDARD 11)
+
 # Set the build type to MinSizeRel if not specified
 if (NOT DEFINED CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE MinSizeRel)
@@ -76,11 +91,37 @@ endif ()
 message (STATUS "Setting custom compiler options ...")
 include ("${CMAKE_SOURCE_DIR}/CMake/set_compiler_flags.cmake")
 set_compiler_flags()
-message (STATUS "Custom compiler options set to: `"
-  ${CMAKE_CXX_FLAGS} " "
-  ${CMAKE_CXX_FLAGS_DEBUG}
-  "' ..."
-  )
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_DEBUG}
+    "' ..."
+    )
+elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_RELEASE}
+    "' ..."
+    )
+elseif (CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}
+    "' ..."
+    )
+elseif (CMAKE_BUILD_TYPE STREQUAL "MinSizeRel")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_MINSIZEREL}
+    "' ..."
+    )
+else()
+  message(ERROR "Unknown CMAKE_BUILD_TYPE: `"
+    ${CMAKE_BUILD_TYPE}
+    "' ..."
+    )
+endif()
+
 
 message(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 add_library(${PROJECT_NAME} INTERFACE)
